@@ -2,9 +2,12 @@ import React from "react";
 import Logo from "./Logo";
 import { Layout, Menu, Typography } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const { Header } = Layout;
+  const router = useRouter();
+
   return (
     <Header
       style={{
@@ -14,7 +17,7 @@ const Header = () => {
       }}
     >
       <Logo />
-      <Menu theme="dark" mode="horizontal">
+      <Menu theme="dark" mode="horizontal" selectedKeys={[router.asPath]}>
         <Menu.Item key="/mybooks">
           <Link href="/mybooks" passHref>
             <a>

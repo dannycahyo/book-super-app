@@ -12,16 +12,16 @@ const Body = ({ children }: { children: ReactNode }) => {
             <Breadcrumb.Item>Home</Breadcrumb.Item>
           </a>
         </Link>
-        <Breadcrumb.Item>
-          <Link passHref href="/mybooks">
-            <a>My Books</a>
-          </Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>
-          <Link passHref href="/upcomingbooks">
-            <a>Upcoming Book</a>
-          </Link>
-        </Breadcrumb.Item>
+        <Link passHref href="/mybooks">
+          <a>
+            <Breadcrumb.Item>My Books</Breadcrumb.Item>
+          </a>
+        </Link>
+        <Link passHref href="/upcomingbooks">
+          <a>
+            <Breadcrumb.Item>Upcoming Book</Breadcrumb.Item>
+          </a>
+        </Link>
       </Breadcrumb>
       <div style={{ padding: 15, background: "#fff" }}>{children}</div>
     </Content>
