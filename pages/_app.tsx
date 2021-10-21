@@ -7,8 +7,12 @@ import Header from "@containers/Header";
 import Footer from "@containers/Footer";
 import Body from "@containers/Body";
 import Head from "next/head";
+import React, { useState } from "react";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <div>
       <Head>
@@ -22,7 +26,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Layout>
         <Header />
         <Body>
-          <Component {...pageProps} />
+          <QueryClientProvider client={queryClient}>
+            <Hydrate state={pageProps.dehydratedState}>
+              <Component {...pageProps} />
+            </Hydrate>
+          </QueryClientProvider>
         </Body>
         <Footer />
       </Layout>
