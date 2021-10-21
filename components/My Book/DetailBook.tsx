@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Typography, Image, Space, Descriptions } from "antd";
-import { Book } from "../../Type/Book";
+import { Book } from "@type/Book";
 
 const DetailBook = ({ selectedBook }: { selectedBook: Book | null }) => {
   return (
@@ -79,14 +79,6 @@ const DetailBook = ({ selectedBook }: { selectedBook: Book | null }) => {
           </Descriptions.Item>
         </Descriptions>
       </div>
-      <Space size="middle">
-        <Button type="primary" onClick={() => {}}>
-          Edit
-        </Button>
-        <Button type="primary" danger onClick={() => {}}>
-          Delete
-        </Button>
-      </Space>
     </div>
   );
 };

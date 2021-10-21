@@ -8,3 +8,5 @@ export type Book = {
     reason: string;
     isBuyed: boolean;
   };
+
+export type NewBook = Omit<Book, "_id">;
