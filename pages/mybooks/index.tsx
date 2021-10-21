@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DetailBook from "@components/My Book/DetailBook";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import {
   List,
@@ -30,6 +31,15 @@ const MyBook = () => {
   const { data: allBooks } = useQuery<Book[]>("books", handleGetBooks);
 
   const [searchValue, setSearchValue] = useState<string>("");
+
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+
+  const [isOpenDetailBook, setIsOpenDetailBook] = useState<boolean>(false);
+
+  const handleOpenDetailBook = (book: Book | null) => {
+    setSelectedBook(book);
+    setIsOpenDetailBook(true);
+  };
 
   const filteredBooks = allBooks?.filter((book: Book) => {
     return (
@@ -95,7 +105,7 @@ const MyBook = () => {
                           fontWeight: "bold",
                         }}
                         key={book._id}
-                        onClick={() => {}}
+                        onClick={() => handleOpenDetailBook(book)}
                       >
                         Detail Book
                       </Button>,
@@ -135,6 +145,15 @@ const MyBook = () => {
           )}
         </Col>
       </Row>
+      <Modal
+        width={700}
+        centered
+        visible={isOpenDetailBook}
+        onOk={() => setIsOpenDetailBook(false)}
+        onCancel={() => setIsOpenDetailBook(false)}
+      >
+        {selectedBook && <DetailBook selectedBook={selectedBook} />}
+      </Modal>
     </div>
   );
 };
