@@ -6,6 +6,11 @@ export async function handleGetBooks () {
     return res.json();
   };
 
+export async function getBestSellerBooks() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BOOK_PUBLIC_API}?api-key=${process.env.NEXT_PUBLIC_API_KEY} `)
+  return res.json()
+}
+
   const requestAddBooks = async (newBook: NewBook) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BOOK_API}`, {
       method: "POST",
