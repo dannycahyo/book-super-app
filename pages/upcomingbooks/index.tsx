@@ -10,7 +10,7 @@ const UpComingBooks = () => {
   const { data: allBooks } = useQuery<Book[]>("books", handleGetBooks);
 
   return (
-    <Row>
+    <Row justify="center" align="middle">
       <AddBook />
       <ListBook books={allBooks} />
     </Row>

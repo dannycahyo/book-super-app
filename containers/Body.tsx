@@ -5,7 +5,7 @@ import Link from "next/link";
 const Body = ({ children }: { children: ReactNode }) => {
   const { Content } = Layout;
   return (
-    <Content style={{ padding: "0 25px" }}>
+    <Content style={{ padding: "70px 25px 0px 25px" }}>
       <Breadcrumb style={{ marginBottom: 12 }}>
         <Link passHref href="/">
           <a>
