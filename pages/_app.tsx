@@ -2,10 +2,6 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import "tailwindcss/tailwind.css";
 import "antd/dist/antd.css";
-import { Layout } from "antd";
-import Header from "@containers/Header";
-import Footer from "@containers/Footer";
-import Body from "@containers/Body";
 import Head from "next/head";
 import React, { useState } from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
@@ -23,17 +19,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <Header />
-        <Body>
-          <QueryClientProvider client={queryClient}>
-            <Hydrate state={pageProps.dehydratedState}>
-              <Component {...pageProps} />
-            </Hydrate>
-          </QueryClientProvider>
-        </Body>
-        <Footer />
-      </Layout>
+
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Component {...pageProps} />
+        </Hydrate>
+      </QueryClientProvider>
     </div>
   );
 }

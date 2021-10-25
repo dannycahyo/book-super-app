@@ -1,6 +1,7 @@
 import React from "react";
 import AddBook from "@components/Upcoming Book/AddBook";
 import ListBook from "@components/Upcoming Book/ListBook";
+import Layout from "@containers/Layout/Layout";
 import { QueryClient, dehydrate, useQuery } from "react-query";
 import { Row } from "antd";
 import { handleGetBooks } from "@hooks/useFetchBook";
@@ -10,10 +11,12 @@ const UpComingBooks = () => {
   const { data: allBooks } = useQuery<Book[]>("books", handleGetBooks);
 
   return (
-    <Row justify="center" align="middle">
-      <AddBook />
-      <ListBook books={allBooks} />
-    </Row>
+    <Layout>
+      <Row justify="center" align="middle">
+        <AddBook />
+        <ListBook books={allBooks} />
+      </Row>
+    </Layout>
   );
 };
 

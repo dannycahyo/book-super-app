@@ -1,4 +1,5 @@
 import React from "react";
+import Layout from "@containers/Layout/Layout";
 import BestSeller from "@components/Recommendation/BestSeller";
 import { Row, Typography } from "antd";
 import { getBestSellerBooks } from "@hooks/useFetchBook";
@@ -10,9 +11,11 @@ const Recommendation = () => {
   const bestSellerBook = data?.results?.books;
 
   return (
-    <Row>
-      <BestSeller bestSellerBook={bestSellerBook} />
-    </Row>
+    <Layout>
+      <Row>
+        <BestSeller bestSellerBook={bestSellerBook} />
+      </Row>
+    </Layout>
   );
 };
 

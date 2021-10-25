@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Layout from "@containers/Layout/Layout";
 import DetailBook from "@components/My Book/DetailBook";
 import FindBook from "@components/My Book/FindBook";
 import { dehydrate, QueryClient, useQuery } from "react-query";
@@ -111,7 +112,7 @@ const MyBook = () => {
   );
 
   return (
-    <div>
+    <Layout>
       <FindBook searchValue={searchValue} setSearchValue={setSearchValue} />
       <Row justify="center" align="middle">
         <Col xxl={18} xl={24} lg={18} md={24} sm={16} xs={24}>
@@ -336,7 +337,7 @@ const MyBook = () => {
           </Form.Item>
         </Form>
       </Modal>
-    </div>
+    </Layout>
   );
 };
 
