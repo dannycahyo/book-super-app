@@ -9,14 +9,7 @@ const Header = () => {
   const router = useRouter();
 
   return (
-    <Header
-      style={{
-        marginBottom: 16,
-        position: "fixed",
-        zIndex: 1,
-        width: "100%",
-      }}
-    >
+    <Header className="mb-12 z-10 w-full fixed">
       <Row justify="space-between">
         <Col>
           <Logo />

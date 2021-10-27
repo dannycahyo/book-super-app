@@ -16,6 +16,7 @@ const Logo = () => {
               color: "lightblue",
               marginTop: 16,
             }}
+            className="flex items-center mt-12"
           >
             <BookTwoTone style={{ marginRight: 2 }} />
             <span>Book App</span>

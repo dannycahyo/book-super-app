@@ -23,7 +23,7 @@ const Body = ({ children }: { children: ReactNode }) => {
           </a>
         </Link>
       </Breadcrumb>
-      <div className="min-h-screen" style={{ padding: 15, background: "#fff" }}>
+      <div className="min-h-screen px-12 py-4" style={{ background: "#fff" }}>
         {children}
       </div>
     </Content>

@@ -40,14 +40,7 @@ const AddBook = () => {
   return (
     <>
       <Col xxl={12} xl={10} lg={20} md={20} sm={20} xs={20}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            marginTop: 20,
-          }}
-        >
+        <div className="flex items-center flex-col mt-16">
           <Typography.Title
             style={{ color: "#3182CE", textAlign: "center" }}
             level={3}
@@ -56,6 +49,7 @@ const AddBook = () => {
           </Typography.Title>
           <Button
             size="large"
+            type="primary"
             style={{
               background: "#3182CE",
               color: "white",

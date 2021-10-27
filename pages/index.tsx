@@ -1,13 +1,14 @@
 import React from "react";
+import Layout from "@containers/Layout/Layout";
 import Heroes from "@components/Home/Heroes";
 import Guidance from "@components/Home/Guidance";
 
 const Home = () => {
   return (
-    <div className="min-h-screen">
+    <Layout>
       <Heroes />
       <Guidance />
-    </div>
+    </Layout>
   );
 };
 

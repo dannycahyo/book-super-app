@@ -9,10 +9,10 @@ const FindBook = ({
   setSearchValue: any;
 }) => {
   return (
-    <Row justify="space-around" align="middle" style={{ marginBottom: 30 }}>
+    <Row justify="center" align="middle" className="mt-8 mb-12">
       <Col xxl={10} xl={12} lg={14} md={14} sm={16} xs={18}>
         <Input.Search
-          style={{ marginLeft: 20, color: "#3182CE" }}
+          style={{ color: "#3182CE" }}
           placeholder="Find Your Book!"
           allowClear
           size="large"

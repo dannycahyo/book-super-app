@@ -9,7 +9,7 @@ const Heroes = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   return (
-    <div style={{ width: "90%", marginRight: "auto", marginLeft: "auto" }}>
+    <div className="w-11/12 mx-auto">
       <Row justify="center" gutter={[48, 24]} align="middle">
         <Col xxl={14} xl={9} lg={18} md={18} sm={24} xs={24}>
           <div>
@@ -22,7 +22,7 @@ const Heroes = () => {
               Properly & Systematically
             </Typography.Title>
           </div>
-          <div style={{ width: "80%" }}>
+          <div className="w-10/12">
             <Typography.Text>
               As a reader, we all have the same concern about managing our
               current book, or the upcoming book. For instance, we often forget
@@ -33,12 +33,8 @@ const Heroes = () => {
           </div>
           <Button
             size="large"
-            style={{
-              background: "#3182CE",
-              color: "white",
-              fontWeight: "bold",
-              marginTop: 20,
-            }}
+            type="primary"
+            className="bg-blue-600 font-bold text-white mt-16"
             onClick={() => setIsModalVisible(true)}
           >
             Watch Demo

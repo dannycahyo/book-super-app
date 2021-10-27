@@ -6,12 +6,9 @@ const Footer = () => {
   return (
     <Footer
       style={{
-        alignItems: "center",
-        textAlign: "center",
         background: "#001529",
-        color: "white",
-        marginTop: 40,
       }}
+      className="mt-20 text-white text-center items-center"
     >
       <Row align="middle">
         <Col span={24}>

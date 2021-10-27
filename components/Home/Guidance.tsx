@@ -63,15 +63,7 @@ const Guidance = () => {
         </Col>
       </Row>
       <Row justify="center">
-        <Col
-          xxl={18}
-          xl={20}
-          lg={18}
-          md={20}
-          sm={24}
-          xs={22}
-          style={{ marginTop: "24px" }}
-        >
+        <Col xxl={18} xl={20} lg={18} md={20} sm={24} xs={22} className="mt-20">
           {current < tutorials.length - 1 && (
             <Button
               className="w-24"
