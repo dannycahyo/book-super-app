@@ -9,6 +9,7 @@ import {
   Result,
   Space,
   Image,
+  message,
 } from "antd";
 import { CheckOutlined, DollarOutlined } from "@ant-design/icons";
 import { RiBookMarkFill } from "react-icons/ri";
@@ -36,6 +37,10 @@ const ListBook = ({ books }: { books: Book[] | undefined }) => {
       isBuyed: true,
       _id: book._id,
     });
+  };
+
+  const handleFinishBuyBook = () => {
+    message.success("You can cek the book on my book page", 12);
   };
 
   return (
@@ -102,7 +107,9 @@ const ListBook = ({ books }: { books: Book[] | undefined }) => {
                   color: "white",
                   fontWeight: "bold",
                 }}
-                onClick={() => handleBuyBook(book)}
+                onClick={() => {
+                  handleBuyBook(book), handleFinishBuyBook();
+                }}
               >
                 <CheckOutlined />
                 Already Buyed
