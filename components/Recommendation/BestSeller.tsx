@@ -25,7 +25,15 @@ const BestSeller = ({
   );
 
   return (
-    <Col className="2xl:px-12 md:px-6  mt-4">
+    <Col
+      xxl={24}
+      xl={22}
+      lg={18}
+      md={24}
+      sm={16}
+      xs={24}
+      className="2xl:px-4 xl:px-8 mt-4"
+    >
       <Typography.Title level={2} style={{ color: "#3182CE" }}>
         Best Seller
       </Typography.Title>
@@ -36,7 +44,7 @@ const BestSeller = ({
           sm: 1,
           md: 2,
           lg: 3,
-          xl: 4,
+          xl: 3,
         }}
         pagination={{
           onChange: (page) => {
@@ -75,10 +83,9 @@ const BestSeller = ({
               ]}
               cover={
                 <Image
-                  height={250}
-                  width={320}
                   src={book.book_image}
                   alt="Book Image"
+                  style={{ height: 350, width: 400 }}
                   preview={false}
                 />
               }
