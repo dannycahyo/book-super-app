@@ -1,7 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Form, Input, Button, Typography } from "antd";
+import axios from "axios";
+import useToken from "@hooks/useToken";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const { userJwt, setUserJwt } = useToken();
+  const router = useRouter();
+
+  const [emailValue, setEmailValue] = useState<string>("");
+  const [passwordValue, setPasswordValue] = useState<string>("");
+
+  const handleLoginButton = () => {
+    const user = {
+      email: emailValue,
+      password: passwordValue,
+    };
+
+    axios({
+      method: "POST",
+      url: `http://localhost:3001/login`,
+      data: user,
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        console.log(response);
+        console.log(response.data);
+        const token = response.data.token;
+        if (token) {
+          setUserJwt(token);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  if (userJwt) {
+    router.push("/");
+  }
+
   return (
     <Row justify="center" align="middle" className="py-36 min-h-screen">
       <Col span={6}>
@@ -19,7 +57,13 @@ const Login = () => {
             name="email"
             rules={[{ required: true, message: "Please input your username!" }]}
           >
-            <Input />
+            <Input
+              allowClear
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setEmailValue(event.target.value)
+              }
+              value={emailValue}
+            />
           </Form.Item>
 
           <Form.Item
@@ -27,7 +71,14 @@ const Login = () => {
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input.Password />
+            <Input
+              allowClear
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPasswordValue(event.target.value)
+              }
+              value={passwordValue}
+              type="password"
+            />
           </Form.Item>
 
           <Form.Item>
@@ -36,6 +87,7 @@ const Login = () => {
               htmlType="submit"
               size="large"
               className="min-w-full"
+              onClick={handleLoginButton}
             >
               Login
             </Button>
