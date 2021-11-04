@@ -1,7 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Form, Input, Button, Typography } from "antd";
+import useToken from "@hooks/useToken";
+import { useRouter } from "next/router";
 
 const Register = () => {
+  const { userJwt, setUserJwt } = useToken();
+  const router = useRouter();
+
+  const [emailValue, setEmailValue] = useState<string>("");
+  const [passwordValue, setPasswordValue] = useState<string>("");
+
+  const handleRegister = () => {
+    const user = {
+      email: emailValue,
+      password: passwordValue,
+    };
+    fetch(`http://localhost:3001/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    })
+      .then((response: any) => {
+        console.log(response);
+        console.log(response.data.token);
+        const token = response.data.token;
+        if (token) {
+          setUserJwt(token);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  if (userJwt !== null) {
+    router.push("/");
+  }
+
   return (
     <Row justify="center" align="middle" className="py-36 min-h-screen">
       <Col span={6}>
@@ -10,24 +45,21 @@ const Register = () => {
         </Typography.Title>
         <Form
           layout="vertical"
-          name="basic"
           initialValues={{ remember: true }}
           autoComplete="off"
         >
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
-          >
-            <Input />
-          </Form.Item>
-
           <Form.Item
             label="Email"
             name="email"
             rules={[{ required: true, message: "Please input your email!" }]}
           >
-            <Input />
+            <Input
+              allowClear
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setEmailValue(event.target.value)
+              }
+              value={emailValue}
+            />
           </Form.Item>
 
           <Form.Item
@@ -35,7 +67,14 @@ const Register = () => {
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input.Password />
+            <Input
+              allowClear
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPasswordValue(event.target.value)
+              }
+              value={passwordValue}
+              type="password"
+            />
           </Form.Item>
 
           <Form.Item>
@@ -44,6 +83,7 @@ const Register = () => {
               htmlType="submit"
               size="large"
               className="min-w-full"
+              onClick={handleRegister}
             >
               Register
             </Button>
