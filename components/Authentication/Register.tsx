@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Form, Input, Button, Typography } from "antd";
 import useToken from "@hooks/useToken";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const Register = () => {
   const { userJwt, setUserJwt } = useToken();
@@ -15,25 +16,25 @@ const Register = () => {
       email: emailValue,
       password: passwordValue,
     };
-    fetch(`http://localhost:3001/signup`, {
+    axios({
       method: "POST",
+      url: `http://localhost:3001/signup`,
+      data: user,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
     })
       .then((response: any) => {
-        console.log(response);
-        console.log(response.data.token);
         const token = response.data.token;
         if (token) {
           setUserJwt(token);
+          router.push("/");
         }
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.log(error);
       });
   };
 
-  if (userJwt !== null) {
+  if (userJwt) {
     router.push("/");
   }
 
