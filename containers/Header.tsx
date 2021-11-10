@@ -32,8 +32,8 @@ const Header = () => {
                 </a>
               </Link>
             </Menu.Item>
-            <Menu.Item key="/upcomingbooks">
-              <Link href="/upcomingbooks" passHref>
+            <Menu.Item key="/wishlist">
+              <Link href="/wishlist" passHref>
                 <a>
                   <Typography.Title
                     level={5}
@@ -43,7 +43,7 @@ const Header = () => {
                       marginBottom: 20,
                     }}
                   >
-                    Upcoming
+                    Wishlist
                   </Typography.Title>
                 </a>
               </Link>

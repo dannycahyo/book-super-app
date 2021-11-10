@@ -45,7 +45,7 @@ const AddBook = () => {
             style={{ color: "#3182CE", textAlign: "center" }}
             level={3}
           >
-            This Is The List Of Your Future Book
+            Add More Books Into Your Wishlist
           </Typography.Title>
           <Button
             size="large"

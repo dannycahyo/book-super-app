@@ -45,6 +45,12 @@ const ListBook = ({ books }: { books: Book[] | undefined }) => {
 
   return (
     <Col span={12} xxl={12} xl={14} lg={20} md={24} sm={24} xs={24}>
+      <Typography.Title
+        style={{ color: "#3182CE", textAlign: "center" }}
+        level={3}
+      >
+        This Is The List Of Your Future Book
+      </Typography.Title>
       <List
         itemLayout="vertical"
         size="large"

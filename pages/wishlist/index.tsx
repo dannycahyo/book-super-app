@@ -1,6 +1,6 @@
 import React from "react";
-import AddBook from "@components/Upcoming Book/AddBook";
-import ListBook from "@components/Upcoming Book/ListBook";
+import AddBook from "@components/Wishlist/AddBook";
+import ListBook from "@components/Wishlist/ListBook";
 import Layout from "@containers/Layout/Layout";
 import { QueryClient, dehydrate, useQuery } from "react-query";
 import { Row } from "antd";
