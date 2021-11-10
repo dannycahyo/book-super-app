@@ -10,11 +10,13 @@ const Register = () => {
 
   const [emailValue, setEmailValue] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
 
   const handleRegister = () => {
     const user = {
       email: emailValue,
       password: passwordValue,
+      username: userName,
     };
     axios({
       method: "POST",
@@ -49,6 +51,20 @@ const Register = () => {
           initialValues={{ remember: true }}
           autoComplete="off"
         >
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Please input your username!" }]}
+          >
+            <Input
+              allowClear
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setUserName(event.target.value)
+              }
+              value={userName}
+            />
+          </Form.Item>
+
           <Form.Item
             label="Email"
             name="email"
