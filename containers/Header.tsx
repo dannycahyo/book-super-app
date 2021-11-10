@@ -9,7 +9,7 @@ const Header = () => {
   const router = useRouter();
 
   return (
-    <Header className="mb-12 z-10 w-full fixed">
+    <Header className="mb-8 z-10 w-full fixed">
       <Row justify="space-between">
         <Col>
           <Logo />

@@ -8,7 +8,7 @@ const Footer = () => {
       style={{
         background: "#001529",
       }}
-      className="mt-20 text-white text-center items-center"
+      className="mt-8 text-white text-center items-center"
     >
       <Row align="middle">
         <Col span={24}>
