@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "@containers/Layout/Layout";
 import { Tabs, Row } from "antd";
 import { UserOutlined, FolderOpenOutlined } from "@ant-design/icons";
 import PersonalInfo from "@components/Profile/PersonalInfo";
 
 const ProfilePage = () => {
+  useEffect(() => {
+    async function handleGetAccount() {
+      const res = await fetch("/api/auth/accountinfo");
+      const result = await res.json();
+      console.log(result);
+    }
+    handleGetAccount();
+  }, []);
+
   return (
     <Layout>
       <Row justify="center" align="middle">
