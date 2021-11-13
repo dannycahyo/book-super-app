@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Col,
   Typography,
@@ -8,21 +8,40 @@ import {
   Space,
   Button,
   Avatar,
+  Row,
+  Input,
+  Select,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { BestSellerBook } from "@type/Book";
+import { BestSellerBook, RecommendationBook } from "@type/Book";
+import { useQuery } from "react-query";
 
-const BestSeller = ({
-  bestSellerBook,
-}: {
-  bestSellerBook: BestSellerBook[];
-}) => {
+const Recommendation = () => {
   const IconText = ({ icon, text }: any) => (
     <Space size="small">
       {React.createElement(icon)}
       {text}
     </Space>
   );
+
+  const { Option } = Select;
+
+  function handleChange(value: any) {
+    console.log(`selected ${value}`);
+  }
+
+  const [bookType, setBookType] = useState<string>("hardcover-fiction");
+
+  const getRecommendationBook = async () => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_RECOMMENDATION_BOOK}/${bookType}.json?api-key=${process.env.NEXT_PUBLIC_API_KEY} `
+    );
+    return res.json();
+  };
+
+  const { data } = useQuery("recommendation", getRecommendationBook);
+
+  const recommendationBook: BestSellerBook[] = data?.results?.books;
 
   return (
     <Col
@@ -34,9 +53,31 @@ const BestSeller = ({
       xs={24}
       className="2xl:px-4 xl:px-8 mt-4"
     >
-      <Typography.Title level={2} style={{ color: "#3182CE" }}>
-        Best Seller
-      </Typography.Title>
+      <Row justify="space-between" className="py-8">
+        <Col span={12}>
+          <Select defaultValue="lucy" className="w-80" onChange={handleChange}>
+            <Option value="jack">Jack</Option>
+            <Option value="lucy">Lucy</Option>
+            <Option value="Yiminghe">yiminghe</Option>
+          </Select>
+        </Col>
+        <Col span={4}>
+          <Button
+            type="primary"
+            onClick={() => setBookType("paperback-nonfiction")}
+          >
+            Click Me
+          </Button>
+        </Col>
+        <Col span={8}>
+          <Input.Search
+            style={{ color: "#3182CE" }}
+            placeholder="Find Your Book!"
+            allowClear
+            size="large"
+          />
+        </Col>
+      </Row>
       <List
         grid={{
           gutter: 42,
@@ -54,7 +95,7 @@ const BestSeller = ({
           position: "bottom",
           pageSize: 8,
         }}
-        dataSource={bestSellerBook}
+        dataSource={recommendationBook}
         renderItem={(book) => (
           <List.Item>
             <Card
@@ -105,9 +146,8 @@ const BestSeller = ({
           </List.Item>
         )}
       />
-      ,
     </Col>
   );
 };
 
-export default BestSeller;
+export default Recommendation;

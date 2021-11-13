@@ -5,7 +5,7 @@ import Link from "next/link";
 const Body = ({ children }: { children: ReactNode }) => {
   const { Content } = Layout;
   return (
-    <Content style={{ padding: "25px 25px 0px 25px" }}>
+    <Content style={{ padding: "80px 25px 0px 25px" }}>
       <div className="min-h-screen px-12 py-4" style={{ background: "#fff" }}>
         {children}
       </div>

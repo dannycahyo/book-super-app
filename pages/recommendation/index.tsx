@@ -1,11 +1,12 @@
 import React from "react";
 import Layout from "@containers/Layout/Layout";
+import Recommendation from "@components/Recommendation/Recommendation";
 import BestSeller from "@components/Recommendation/BestSeller";
 import { Row, Typography } from "antd";
 import { getBestSellerBooks } from "@hooks/useFetchBook";
 import { QueryClient, dehydrate, useQuery } from "react-query";
 
-const Recommendation = () => {
+const RecommendationPage = () => {
   const { data } = useQuery("best-seller-books", getBestSellerBooks);
 
   const bestSellerBook = data?.results?.books;
@@ -13,13 +14,14 @@ const Recommendation = () => {
   return (
     <Layout>
       <Row>
+        <Recommendation />
         <BestSeller bestSellerBook={bestSellerBook} />
       </Row>
     </Layout>
   );
 };
 
-export default Recommendation;
+export default RecommendationPage;
 
 export async function getStaticProps(): Promise<{
   props: {};

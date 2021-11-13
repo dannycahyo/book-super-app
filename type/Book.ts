@@ -35,3 +35,16 @@ export type BestSellerBook = {
   article_chapter_link: string
   isbns: []
 }
+
+export type RecommendationBook = {
+  title: string
+  description: string
+  contributor: string
+  author: string
+  contributor_note: string
+  price: number
+  age_group: string
+  publisher: string
+  primary_isbn13: string
+  primary_isbn10: string
+}
