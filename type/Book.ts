@@ -36,6 +36,33 @@ export type BestSellerBook = {
   isbns: []
 }
 
+export type Best5SellerBook = {
+  age_group: string
+  amazon_product_url: string
+  article_chapter_link: string
+  author: string
+  book_image: string
+  book_image_height: number
+  book_image_width: number
+  book_uri: string
+  buy_links: any[]
+  contributor: string
+  contributor_note: string
+  created_date: string
+  description: string
+  first_chapter_link: string
+  primary_isbn10: string
+  primary_isbn13: string
+  publisher: string
+  rank: number
+  rank_last_week: string
+  sunday_review_link: string
+  title: string
+  price: string
+  updated_date: string
+  weeks_on_list: number
+}
+
 export type RecommendationBook = {
   title: string
   description: string

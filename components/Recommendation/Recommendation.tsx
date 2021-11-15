@@ -12,6 +12,7 @@ import {
   Input,
   Select,
   Result,
+  Divider,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { BestSellerBook } from "@type/Book";
@@ -75,6 +76,10 @@ const Recommendation = () => {
       className="2xl:px-4 xl:px-8 mt-4"
     >
       <Row justify="space-between" className="py-8">
+        <Typography.Title level={2} style={{ color: "#3182CE" }}>
+          Recommendation
+        </Typography.Title>
+        <Divider />
         <Col span={12}>
           <Typography.Title
             style={{ color: "#3182CE", textAlign: "center" }}
@@ -134,7 +139,7 @@ const Recommendation = () => {
             },
             responsive: true,
             position: "bottom",
-            pageSize: 8,
+            pageSize: 10,
           }}
           dataSource={filteredBooks}
           renderItem={(book) => (
