@@ -13,6 +13,12 @@ export async function getBestSellerBooks() {
   return res.json()
 }
 
+export async function get5BestSellerBooks() {
+  const res = await fetch(`${process.env.
+    NEXT_PUBLIC_5BEST_SELLER_BOOK}?api-key=${process.env.NEXT_PUBLIC_API_KEY} `)
+  return res.json()
+}
+
   const requestAddBooks = async (newBook: NewBook) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BOOK_API}`, {
       method: "POST",
