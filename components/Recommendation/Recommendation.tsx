@@ -23,15 +23,26 @@ const Recommendation = () => {
     </Space>
   );
 
-  const { Option } = Select;
-
-  function handleChange(value: any) {
-    console.log(`selected ${value}`);
-  }
-
   const [books, setBooks] = useState<BestSellerBook[]>([]);
 
   const [bookType, setBookType] = useState<string>("hardcover-fiction");
+
+  const optionValue = [
+    "hardcover-fiction",
+    "e-book-fiction",
+    "combined-print-and-e-book-nonfiction",
+    "trade-fiction-paperback",
+    "paperback-nonfiction",
+    "childrens-middle-grade-hardcover",
+    "picture-books",
+    "series-books",
+    "young-adult-hardcover",
+    "audio-fiction",
+    "graphic-books-and-manga",
+    "mass-market-monthly",
+    "middle-grade-paperback-monthly",
+    "young-adult-paperback-monthly",
+  ];
 
   useEffect(() => {
     async function getRecommendationBook() {
@@ -56,21 +67,33 @@ const Recommendation = () => {
     >
       <Row justify="space-between" className="py-8">
         <Col span={12}>
-          <Select defaultValue="lucy" className="w-80" onChange={handleChange}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
+          <Typography.Title
+            style={{ color: "#3182CE", textAlign: "center" }}
+            level={4}
+            className="flex justify-start"
+          >
+            Filter The Books
+          </Typography.Title>
+          <Select
+            className="w-80"
+            onChange={(value: string) => setBookType(value)}
+            value={bookType}
+          >
+            {optionValue.map((category) => (
+              <Select.Option key={category} value={category}>
+                {category}
+              </Select.Option>
+            ))}
           </Select>
         </Col>
-        <Col span={4}>
-          <Button
-            type="primary"
-            onClick={() => setBookType("paperback-nonfiction")}
-          >
-            Click Me
-          </Button>
-        </Col>
         <Col span={8}>
+          <Typography.Title
+            style={{ color: "#3182CE", textAlign: "center" }}
+            level={4}
+            className="flex justify-start"
+          >
+            Find The Books
+          </Typography.Title>
           <Input.Search
             style={{ color: "#3182CE" }}
             placeholder="Find Your Book!"
@@ -86,7 +109,8 @@ const Recommendation = () => {
           sm: 1,
           md: 2,
           lg: 3,
-          xl: 3,
+          xl: 4,
+          xxl: 5,
         }}
         pagination={{
           onChange: (page) => {
