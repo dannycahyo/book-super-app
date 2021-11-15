@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Col,
   Typography,
@@ -13,8 +13,7 @@ import {
   Select,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { BestSellerBook, RecommendationBook } from "@type/Book";
-import { useQuery } from "react-query";
+import { BestSellerBook } from "@type/Book";
 
 const Recommendation = () => {
   const IconText = ({ icon, text }: any) => (
@@ -30,18 +29,20 @@ const Recommendation = () => {
     console.log(`selected ${value}`);
   }
 
+  const [books, setBooks] = useState<BestSellerBook[]>([]);
+
   const [bookType, setBookType] = useState<string>("hardcover-fiction");
 
-  const getRecommendationBook = async () => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_RECOMMENDATION_BOOK}/${bookType}.json?api-key=${process.env.NEXT_PUBLIC_API_KEY} `
-    );
-    return res.json();
-  };
-
-  const { data } = useQuery("recommendation", getRecommendationBook);
-
-  const recommendationBook: BestSellerBook[] = data?.results?.books;
+  useEffect(() => {
+    async function getRecommendationBook() {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_RECOMMENDATION_BOOK}/${bookType}.json?api-key=${process.env.NEXT_PUBLIC_API_KEY} `
+      );
+      const result = await res.json();
+      setBooks(result.results?.books);
+    }
+    getRecommendationBook();
+  }, [bookType]);
 
   return (
     <Col
@@ -95,7 +96,7 @@ const Recommendation = () => {
           position: "bottom",
           pageSize: 8,
         }}
-        dataSource={recommendationBook}
+        dataSource={books}
         renderItem={(book) => (
           <List.Item>
             <Card
