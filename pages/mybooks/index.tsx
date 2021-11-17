@@ -24,8 +24,12 @@ import { Book } from "@type/Book";
 import { FormLayout } from "antd/lib/form/Form";
 import { handleGetBooks } from "@hooks/useFetchBook";
 import useFetchBook from "@hooks/useFetchBook";
+import NotAuthenticated from "@containers/NotAuthenticated";
+import useToken from "@hooks/useToken";
 
 const MyBook = () => {
+  const { userJwt } = useToken();
+
   const { data: allBooks } = useQuery<Book[]>("books", handleGetBooks);
 
   const { editBook, deleteBook } = useFetchBook();
@@ -112,232 +116,242 @@ const MyBook = () => {
   );
 
   return (
-    <Layout>
-      <FindBook searchValue={searchValue} setSearchValue={setSearchValue} />
-      <Row justify="center" align="middle">
-        <Col xxl={18} xl={24} lg={18} md={24} sm={16} xs={24}>
-          {filteredBooks?.length === 0 ? (
-            <Result status="404" title="404" subTitle="Can't Find Your Book" />
-          ) : (
-            <List
-              grid={{
-                column: 3,
-                gutter: 42,
-                xs: 1,
-                sm: 1,
-                md: 2,
-                lg: 2,
-                xl: 3,
-                xxl: 3,
-              }}
-              dataSource={filteredBooks}
-              renderItem={(book) => (
-                <List.Item>
-                  <Card
-                    actions={[
-                      <IconText
-                        icon={UserOutlined}
-                        text={book.author}
-                        key={book._id}
-                      />,
-                      <Button
-                        style={{
-                          background: "#3182CE",
-                          color: "white",
-                          fontWeight: "bold",
-                        }}
-                        key={book._id}
-                        onClick={() => handleOpenDetailBook(book)}
+    <div>
+      {userJwt ? (
+        <Layout>
+          <FindBook searchValue={searchValue} setSearchValue={setSearchValue} />
+          <Row justify="center" align="middle">
+            <Col xxl={18} xl={24} lg={18} md={24} sm={16} xs={24}>
+              {filteredBooks?.length === 0 ? (
+                <Result
+                  status="404"
+                  title="404"
+                  subTitle="Can't Find Your Book"
+                />
+              ) : (
+                <List
+                  grid={{
+                    column: 3,
+                    gutter: 42,
+                    xs: 1,
+                    sm: 1,
+                    md: 2,
+                    lg: 2,
+                    xl: 3,
+                    xxl: 3,
+                  }}
+                  dataSource={filteredBooks}
+                  renderItem={(book) => (
+                    <List.Item>
+                      <Card
+                        actions={[
+                          <IconText
+                            icon={UserOutlined}
+                            text={book.author}
+                            key={book._id}
+                          />,
+                          <Button
+                            style={{
+                              background: "#3182CE",
+                              color: "white",
+                              fontWeight: "bold",
+                            }}
+                            key={book._id}
+                            onClick={() => handleOpenDetailBook(book)}
+                          >
+                            Detail Book
+                          </Button>,
+                          <IconText
+                            icon={RiBookMarkFill}
+                            text={book.category}
+                            key={book._id}
+                          />,
+                        ]}
+                        hoverable
+                        cover={
+                          <Image
+                            style={{ height: 350 }}
+                            src={book.image}
+                            alt="BookImg"
+                            preview={false}
+                          />
+                        }
                       >
-                        Detail Book
-                      </Button>,
-                      <IconText
-                        icon={RiBookMarkFill}
-                        text={book.category}
-                        key={book._id}
-                      />,
-                    ]}
-                    hoverable
-                    cover={
-                      <Image
-                        style={{ height: 350 }}
-                        src={book.image}
-                        alt="BookImg"
-                        preview={false}
-                      />
-                    }
-                  >
-                    <Card.Meta
-                      avatar={
-                        <Avatar src="https://image.pngaaa.com/538/21538-middle.png" />
-                      }
-                      title={
-                        <Typography.Title
-                          style={{ color: "#3182CE" }}
-                          level={4}
-                        >
-                          {book.title}
-                        </Typography.Title>
-                      }
-                    />
-                  </Card>
-                </List.Item>
+                        <Card.Meta
+                          avatar={
+                            <Avatar src="https://image.pngaaa.com/538/21538-middle.png" />
+                          }
+                          title={
+                            <Typography.Title
+                              style={{ color: "#3182CE" }}
+                              level={4}
+                            >
+                              {book.title}
+                            </Typography.Title>
+                          }
+                        />
+                      </Card>
+                    </List.Item>
+                  )}
+                />
               )}
-            />
-          )}
-        </Col>
-      </Row>
-      <Modal
-        width={700}
-        centered
-        visible={isOpenDetailBook}
-        onOk={() => setIsOpenDetailBook(false)}
-        onCancel={() => setIsOpenDetailBook(false)}
-      >
-        {selectedBook && (
-          <>
-            <DetailBook selectedBook={selectedBook} />
-            <Space size="middle">
-              <Button
-                type="primary"
-                onClick={() => handleEditDetailBook(formLayout)}
+            </Col>
+          </Row>
+          <Modal
+            width={700}
+            centered
+            visible={isOpenDetailBook}
+            onOk={() => setIsOpenDetailBook(false)}
+            onCancel={() => setIsOpenDetailBook(false)}
+          >
+            {selectedBook && (
+              <>
+                <DetailBook selectedBook={selectedBook} />
+                <Space size="middle">
+                  <Button
+                    type="primary"
+                    onClick={() => handleEditDetailBook(formLayout)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={() => handleDeleteBook(selectedBook._id)}
+                  >
+                    Delete
+                  </Button>
+                </Space>
+              </>
+            )}
+          </Modal>
+          <Modal
+            title={
+              <Typography.Title style={{ color: "#3182CE" }} level={4}>
+                My Books
+              </Typography.Title>
+            }
+            width={700}
+            centered
+            visible={isEditDetailBook}
+            onOk={() => setIsEditDetailBook(false)}
+            onCancel={() => setIsEditDetailBook(false)}
+          >
+            <Form layout={formLayout}>
+              <Form.Item
+                label={
+                  <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                    Title
+                  </Typography.Title>
+                }
+                htmlFor="title"
               >
-                Edit
-              </Button>
-              <Button
-                type="primary"
-                danger
-                onClick={() => handleDeleteBook(selectedBook._id)}
+                <Input
+                  id="title"
+                  value={titleValue}
+                  allowClear
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setTitleValue(event.target.value)
+                  }
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                    Author
+                  </Typography.Title>
+                }
+                htmlFor="author"
               >
-                Delete
-              </Button>
-            </Space>
-          </>
-        )}
-      </Modal>
-      <Modal
-        title={
-          <Typography.Title style={{ color: "#3182CE" }} level={4}>
-            My Books
-          </Typography.Title>
-        }
-        width={700}
-        centered
-        visible={isEditDetailBook}
-        onOk={() => setIsEditDetailBook(false)}
-        onCancel={() => setIsEditDetailBook(false)}
-      >
-        <Form layout={formLayout}>
-          <Form.Item
-            label={
-              <Typography.Title style={{ color: "#3182CE" }} level={5}>
-                Title
-              </Typography.Title>
-            }
-            htmlFor="title"
-          >
-            <Input
-              id="title"
-              value={titleValue}
-              allowClear
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setTitleValue(event.target.value)
-              }
-            />
-          </Form.Item>
-          <Form.Item
-            label={
-              <Typography.Title style={{ color: "#3182CE" }} level={5}>
-                Author
-              </Typography.Title>
-            }
-            htmlFor="author"
-          >
-            <Input
-              id="author"
-              value={authorValue}
-              allowClear
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setAuthorValue(event.target.value)
-              }
-            />
-          </Form.Item>
-          <Form.Item
-            label={
-              <Typography.Title style={{ color: "#3182CE" }} level={5}>
-                Category
-              </Typography.Title>
-            }
-            htmlFor="category"
-          >
-            <Input
-              id="category"
-              value={categoryValue}
-              allowClear
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setCategoryValue(event.target.value)
-              }
-            />
-          </Form.Item>
-          <Form.Item
-            label={
-              <Typography.Title style={{ color: "#3182CE" }} level={5}>
-                Price
-              </Typography.Title>
-            }
-            htmlFor="price"
-          >
-            <Input
-              id="price"
-              value={priceValue}
-              allowClear
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setPriceValue(event.target.value)
-              }
-            />
-          </Form.Item>
-          <Form.Item
-            label={
-              <Typography.Title style={{ color: "#3182CE" }} level={5}>
-                Image
-              </Typography.Title>
-            }
-            htmlFor="image"
-          >
-            <Input
-              id="image"
-              value={imageValue}
-              allowClear
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setImageValue(event.target.value)
-              }
-            />
-          </Form.Item>
-          <Form.Item
-            label={
-              <Typography.Title style={{ color: "#3182CE" }} level={5}>
-                Reason
-              </Typography.Title>
-            }
-            htmlFor="reason"
-          >
-            <Input.TextArea
-              id="reason"
-              value={reasonValue}
-              allowClear
-              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-                setReasonValue(event.target.value)
-              }
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" onClick={handleFinishEdit}>
-              Finish
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-    </Layout>
+                <Input
+                  id="author"
+                  value={authorValue}
+                  allowClear
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setAuthorValue(event.target.value)
+                  }
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                    Category
+                  </Typography.Title>
+                }
+                htmlFor="category"
+              >
+                <Input
+                  id="category"
+                  value={categoryValue}
+                  allowClear
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setCategoryValue(event.target.value)
+                  }
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                    Price
+                  </Typography.Title>
+                }
+                htmlFor="price"
+              >
+                <Input
+                  id="price"
+                  value={priceValue}
+                  allowClear
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setPriceValue(event.target.value)
+                  }
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                    Image
+                  </Typography.Title>
+                }
+                htmlFor="image"
+              >
+                <Input
+                  id="image"
+                  value={imageValue}
+                  allowClear
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setImageValue(event.target.value)
+                  }
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                    Reason
+                  </Typography.Title>
+                }
+                htmlFor="reason"
+              >
+                <Input.TextArea
+                  id="reason"
+                  value={reasonValue}
+                  allowClear
+                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                    setReasonValue(event.target.value)
+                  }
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" onClick={handleFinishEdit}>
+                  Finish
+                </Button>
+              </Form.Item>
+            </Form>
+          </Modal>
+        </Layout>
+      ) : (
+        <NotAuthenticated />
+      )}
+    </div>
   );
 };
 

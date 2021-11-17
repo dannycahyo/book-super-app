@@ -6,17 +6,27 @@ import { QueryClient, dehydrate, useQuery } from "react-query";
 import { Row } from "antd";
 import { handleGetBooks } from "@hooks/useFetchBook";
 import { Book } from "@type/Book";
+import NotAuthenticated from "@containers/NotAuthenticated";
+import useToken from "@hooks/useToken";
 
 const UpComingBooks = () => {
+  const { userJwt } = useToken();
+
   const { data: allBooks } = useQuery<Book[]>("books", handleGetBooks);
 
   return (
-    <Layout>
-      <Row justify="center" align="middle">
-        <AddBook />
-        <ListBook books={allBooks} />
-      </Row>
-    </Layout>
+    <div>
+      {userJwt ? (
+        <Layout>
+          <Row justify="center" align="middle">
+            <AddBook />
+            <ListBook books={allBooks} />
+          </Row>
+        </Layout>
+      ) : (
+        <NotAuthenticated />
+      )}
+    </div>
   );
 };
 
