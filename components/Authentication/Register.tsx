@@ -1,44 +1,18 @@
 import React, { useState } from "react";
 import { Row, Col, Form, Input, Button, Typography } from "antd";
-import useToken from "@hooks/useToken";
-import { useRouter } from "next/router";
-import axios from "axios";
+import { useAuth } from "@hooks/useAuth";
 
 const Register = () => {
-  const { userJwt, setUserJwt } = useToken();
-  const router = useRouter();
+  const auth = useAuth();
 
   const [emailValue, setEmailValue] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
 
-  const handleRegister = () => {
-    const user = {
-      email: emailValue,
-      password: passwordValue,
-      username: userName,
-    };
-    axios({
-      method: "POST",
-      url: `http://localhost:3001/signup`,
-      data: user,
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response: any) => {
-        const token = response.data.token;
-        if (token) {
-          setUserJwt(token);
-          router.push("/");
-        }
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
+  const handleRegister = async () => {
+    const result = await auth.register(userName, emailValue, passwordValue);
+    console.log("This is the result", result);
   };
-
-  if (userJwt) {
-    router.push("/");
-  }
 
   return (
     <Row justify="center" align="middle" className="py-36 min-h-screen">

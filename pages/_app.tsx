@@ -5,6 +5,7 @@ import "antd/dist/antd.css";
 import Head from "next/head";
 import React, { useState } from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import { ProvideAuth } from "@hooks/useAuth";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -20,11 +21,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <Component {...pageProps} />
-        </Hydrate>
-      </QueryClientProvider>
+      <ProvideAuth>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <Component {...pageProps} />
+          </Hydrate>
+        </QueryClientProvider>
+      </ProvideAuth>
     </div>
   );
 }

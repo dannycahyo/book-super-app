@@ -5,19 +5,23 @@ import { UserOutlined, FolderOpenOutlined } from "@ant-design/icons";
 import PersonalInfo from "@components/Profile/PersonalInfo";
 
 const ProfilePage = () => {
-  useEffect(() => {
-    async function handleGetAccount() {
-      const res = await fetch("/api/auth/accountinfo");
-      const result = await res.json();
-      console.log(result);
-    }
-    handleGetAccount();
-  }, []);
+  // const emailUser = auth?.user?.data?.email;
+
+  // useEffect(() => {
+  //   async function handleGetAccount() {
+  //     const res = await fetch(
+  //       `/api/auth/accountinfo?email="fixinimahbisa@google.com"`
+  //     );
+  //     const result = await res.json();
+  //     console.log(result);
+  //   }
+  //   handleGetAccount();
+  // }, [emailUser]);
 
   return (
     <Layout>
       <Row justify="center" align="middle">
-        <Tabs defaultActiveKey="2">
+        <Tabs defaultActiveKey="1">
           <Tabs.TabPane
             tab={
               <span>

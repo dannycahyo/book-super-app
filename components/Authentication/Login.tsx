@@ -3,42 +3,50 @@ import { Row, Col, Form, Input, Button, Typography } from "antd";
 import axios from "axios";
 import useToken from "@hooks/useToken";
 import { useRouter } from "next/router";
+import { useAuth } from "@hooks/useAuth";
 
 const Login = () => {
   const { userJwt, setUserJwt } = useToken();
   const router = useRouter();
 
+  const auth = useAuth();
+
   const [emailValue, setEmailValue] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState<string>("");
 
-  const handleLoginButton = () => {
-    const user = {
-      email: emailValue,
-      password: passwordValue,
-    };
-
-    axios({
-      method: "POST",
-      url: `http://localhost:3001/login`,
-      data: user,
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => {
-        console.log(response);
-        console.log(response.data);
-        const token = response.data.token;
-        if (token) {
-          setUserJwt(token);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleLogin = async () => {
+    const result = auth.login(emailValue, passwordValue);
+    console.log("This is the result", result);
   };
 
-  if (userJwt) {
-    router.push("/");
-  }
+  // const handleLoginButton = () => {
+  //   const user = {
+  //     email: emailValue,
+  //     password: passwordValue,
+  //   };
+
+  //   axios({
+  //     method: "POST",
+  //     url: `http://localhost:3001/login`,
+  //     data: user,
+  //     headers: { "Content-Type": "application/json" },
+  //   })
+  //     .then((response) => {
+  //       console.log(response);
+  //       console.log(response.data);
+  //       const token = response.data.token;
+  //       if (token) {
+  //         setUserJwt(token);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  // if (userJwt) {
+  //   router.push("/");
+  // }
 
   return (
     <Row justify="center" align="middle" className="py-36 min-h-screen">
@@ -87,7 +95,7 @@ const Login = () => {
               htmlType="submit"
               size="large"
               className="min-w-full"
-              onClick={handleLoginButton}
+              onClick={handleLogin}
             >
               Login
             </Button>

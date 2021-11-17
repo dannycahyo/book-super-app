@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { Row, Col, Form, Input, Button, Typography } from "antd";
+import { useAuth } from "@hooks/useAuth";
 
 const PersonalInfo = () => {
   const [emailValue, setEmailValue] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
+
+  const auth = useAuth();
+
+  const userData = auth.user?.data;
+  // console.log(userData);
 
   return (
     <Row justify="center" align="middle" className="py-8">
@@ -17,9 +23,7 @@ const PersonalInfo = () => {
           <Form.Item label="Username" name="username">
             <Input
               allowClear
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setUserName(event.target.value)
-              }
+              defaultValue={userData?.username}
               value={userName}
             />
           </Form.Item>
@@ -27,9 +31,7 @@ const PersonalInfo = () => {
           <Form.Item label="Email" name="email">
             <Input
               allowClear
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setEmailValue(event.target.value)
-              }
+              defaultValue={userData?.email}
               value={emailValue}
             />
           </Form.Item>
@@ -37,12 +39,13 @@ const PersonalInfo = () => {
           <Form.Item label="Password" name="password">
             <Input
               allowClear
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setPasswordValue(event.target.value)
-              }
+              defaultValue={userData?.password}
               value={passwordValue}
               type="password"
             />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary">Save Changes</Button>
           </Form.Item>
         </Form>
       </Col>

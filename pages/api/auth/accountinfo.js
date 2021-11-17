@@ -14,7 +14,7 @@ const handler = async (req, res) => {
 
   let data;
   try {
-    data = await db.findOne({ _id: ObjectId("618b1cc1fc14fc1dd461aca5") });
+    data = await db.findOne({ email });
   } catch (error) {
     return res.status(401).json({ message: "You are unauthorized !!" });
   }
