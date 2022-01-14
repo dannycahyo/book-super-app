@@ -19,7 +19,7 @@ const Logo = () => {
             className="flex items-center mt-12"
           >
             <BookTwoTone style={{ marginRight: 2 }} />
-            <span>Book App</span>
+            <span>BAKUBUKU</span>
           </Typography.Title>
         </a>
       </Link>

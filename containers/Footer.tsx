@@ -18,7 +18,7 @@ const Footer = () => {
               color: "lightblue",
             }}
           >
-            &copy; {new Date().getFullYear()} Book App, Inc. All rights
+            &copy; {new Date().getFullYear()} BAKUBUKU, Inc. All rights
             reserved.
           </Typography.Title>
         </Col>
